@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:masktoritai/model/post.dart';
 import 'package:masktoritai/pages/post_content_page.dart';
+import 'package:masktoritai/pages/posts.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 class TimeLinePage extends StatefulWidget {
@@ -598,7 +599,7 @@ class _TimeLinePageState extends State<TimeLinePage> {
                             fit: BoxFit.cover,
                           ))),
                   Container(
-                    height: 2500,
+                    height: 2600,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -761,118 +762,143 @@ class _TimeLinePageState extends State<TimeLinePage> {
                               ),
                             ),
                             SizedBox(width: 28,),
-                            Container(
-                              child: StreamBuilder<QuerySnapshot>(
-                                  stream: postCollection.orderBy('createdDate', descending: true).snapshots(),
-                                  builder: (context, snapshot) {
-                                    if(snapshot.connectionState == ConnectionState.waiting) {
-                                      return const CircularProgressIndicator();
-                                    }
-                                    if(!snapshot.hasData) {
-                                      return Center(child: Text('データがありません'));
-                                    }
-                                    final docs = snapshot.data!.docs;
-                                    return Container(
-                                      width: 724,
-                                      height: 900,
-                                      child: ListView.builder(
-                                          physics: NeverScrollableScrollPhysics(),
-                                          itemExtent: 300,
-                                          // physics: NeverScrollableScrollPhysics(),
-                                          itemCount: 3,
-                                          itemBuilder: (context, index) {
-                                            Map<String, dynamic> data = docs[index].data() as Map<String, dynamic>;
-                                            final Post fetchPost = Post(
-                                              id: docs[index].id,
-                                              maskRequirement: data['maskRequirement'],
-                                              visitDate: data['visitDate'],
-                                              username: data['username'],
-                                              prefecture: data['prefecture'],
-                                              facility: data['facility'],
-                                              detail: data['detail'],
-                                              createdDate: data['createdDate'],
-                                              updatedDate: data['updatedDate'],
-                                            );
-                                            return Container(
-                                              decoration: BoxDecoration(
-                                                border: Border(
-                                                  bottom: BorderSide(color: Color.fromRGBO(243,243,243,1),),
-                                                ),
-                                              ),
-                                              child: ListTile(
-                                                tileColor: Colors.white,
-                                                title: Container(
-                                                  alignment: Alignment.centerLeft,
-                                                  child: Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                    children: <Widget>[
-                                                      SizedBox(height: 14.3,),
-                                                      Container(
-                                                          child: Text(fetchPost.username,
-                                                            style: TextStyle(
-                                                              fontSize: 16,
-                                                              fontWeight: FontWeight.w700,
-                                                            ),)
-                                                      ),
-                                                      Container(
-                                                          child: Text(fetchPost.visitDate,
-                                                            style: TextStyle(
-                                                                fontSize: 12,
-                                                                color: Color.fromRGBO(136, 136, 136, 1)
-                                                            ),)
-                                                      ),
-                                                      Row(
-                                                        children: [
+                            Column(
+                              children: [
+                                Container(
+                                  child: StreamBuilder<QuerySnapshot>(
+                                      stream: postCollection.orderBy('createdDate', descending: true).snapshots(),
+                                      builder: (context, snapshot) {
+                                        if(snapshot.connectionState == ConnectionState.waiting) {
+                                          return const CircularProgressIndicator();
+                                        }
+                                        if(!snapshot.hasData) {
+                                          return Center(child: Text('データがありません'));
+                                        }
+                                        final docs = snapshot.data!.docs;
+                                        return Container(
+                                          width: 724,
+                                          height: 900,
+                                          child: ListView.builder(
+                                              physics: NeverScrollableScrollPhysics(),
+                                              itemExtent: 300,
+                                              // physics: NeverScrollableScrollPhysics(),
+                                              itemCount: 3,
+                                              itemBuilder: (context, index) {
+                                                Map<String, dynamic> data = docs[index].data() as Map<String, dynamic>;
+                                                final Post fetchPost = Post(
+                                                  id: docs[index].id,
+                                                  maskRequirement: data['maskRequirement'],
+                                                  visitDate: data['visitDate'],
+                                                  username: data['username'],
+                                                  prefecture: data['prefecture'],
+                                                  facility: data['facility'],
+                                                  detail: data['detail'],
+                                                  createdDate: data['createdDate'],
+                                                  updatedDate: data['updatedDate'],
+                                                );
+                                                return Container(
+                                                  decoration: BoxDecoration(
+                                                    border: Border(
+                                                      bottom: BorderSide(color: Color.fromRGBO(243,243,243,1),),
+                                                    ),
+                                                  ),
+                                                  child: ListTile(
+                                                    tileColor: Colors.white,
+                                                    title: Container(
+                                                      alignment: Alignment.centerLeft,
+                                                      child: Column(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        children: <Widget>[
+                                                          SizedBox(height: 14.3,),
                                                           Container(
-                                                            child: Text(fetchPost.facility,
-                                                              style: TextStyle(
+                                                              child: Text(fetchPost.username,
+                                                                style: TextStyle(
                                                                   fontSize: 16,
                                                                   fontWeight: FontWeight.w700,
-                                                                  color: Color.fromRGBO(0, 81, 224, 1)
+                                                                ),)
+                                                          ),
+                                                          Container(
+                                                              child: Text(fetchPost.visitDate,
+                                                                style: TextStyle(
+                                                                    fontSize: 12,
+                                                                    color: Color.fromRGBO(136, 136, 136, 1)
+                                                                ),)
+                                                          ),
+                                                          Row(
+                                                            children: [
+                                                              Container(
+                                                                child: Text(fetchPost.facility,
+                                                                  style: TextStyle(
+                                                                      fontSize: 16,
+                                                                      fontWeight: FontWeight.w700,
+                                                                      color: Color.fromRGBO(0, 81, 224, 1)
+                                                                  ),),
+                                                              ),
+                                                              SizedBox(width: 5,),
+                                                              Container(
+                                                                child: Text('[${fetchPost.prefecture}]',
+                                                                  style: TextStyle(
+                                                                      fontSize: 12,
+                                                                      color: Color.fromRGBO(136, 136, 136, 1)
+                                                                  ),),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          SizedBox(height: 10,),
+                                                          Container(
+                                                            child: Text(fetchPost.maskRequirement,
+                                                              style: TextStyle(
+                                                                fontSize: 16,
                                                               ),),
                                                           ),
-                                                          SizedBox(width: 5,),
+                                                          SizedBox(height: 20,),
                                                           Container(
-                                                            child: Text('[${fetchPost.prefecture}]',
+                                                            child: Text(fetchPost.detail,
                                                               style: TextStyle(
-                                                                  fontSize: 12,
-                                                                  color: Color.fromRGBO(136, 136, 136, 1)
+                                                                fontSize: 16,
                                                               ),),
                                                           ),
                                                         ],
                                                       ),
-                                                      SizedBox(height: 10,),
-                                                      Container(
-                                                        child: Text(fetchPost.maskRequirement,
-                                                          style: TextStyle(
-                                                            fontSize: 16,
-                                                          ),),
-                                                      ),
-                                                      SizedBox(height: 20,),
-                                                      Container(
-                                                        child: Text(fetchPost.detail,
-                                                          style: TextStyle(
-                                                            fontSize: 16,
-                                                          ),),
-                                                      ),
-                                                    ],
+                                                    ),
+                                                    leading: CircleAvatar(
+                                                      radius: 30,
+                                                      backgroundColor: Color.fromRGBO(248,248,248,1),
+                                                      child: Icon(Icons.masks,color: Color.fromRGBO(225,225,225,1),),
+                                                    ),
+                                                    onTap: () {
+                                                      Navigator.push(context, MaterialPageRoute(
+                                                          builder: (context) => PostContentPage(fetchPost)));
+                                                    },
                                                   ),
-                                                ),
-                                                leading: CircleAvatar(
-                                                  radius: 30,
-                                                  backgroundColor: Color.fromRGBO(248,248,248,1),
-                                                  child: Icon(Icons.masks,color: Color.fromRGBO(225,225,225,1),),
-                                                ),
-                                                onTap: () {
-                                                  Navigator.push(context, MaterialPageRoute(
-                                                      builder: (context) => PostContentPage(fetchPost)));
-                                                },
-                                              ),
-                                            );
-                                          }),
-                                    );
-                                  }
-                              ),
+                                                );
+                                              }),
+                                        );
+                                      }
+                                  ),
+                                ),
+                                Container(
+                                  width: 724,height: 134.4,color: Colors.white,
+                                  child: Center(
+                                    child: Container(
+                                      width: 188,
+                                      height: 54.4,
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Color.fromRGBO(0, 82, 224, 1), //ボタンの背景色
+                                        ),
+                                        onPressed: () {
+                                          Navigator.push(context, MaterialPageRoute(
+                                              builder: (context) => PostsPage(title: '',)));
+                                        },
+                                        child: Text(
+                                          "もっと見る",
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
@@ -1263,7 +1289,7 @@ class _TimeLinePageState extends State<TimeLinePage> {
                           fit: BoxFit.cover,
                         ))),
                 Container(
-                  height: 2250,
+                  height: 2350,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -1510,6 +1536,25 @@ class _TimeLinePageState extends State<TimeLinePage> {
                                     }),
                               );
                             }
+                        ),
+                      ),
+                      SizedBox(height: 20,),
+                      Center(
+                        child: Container(
+                          width: 360,
+                          height: 51.09,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color.fromRGBO(0, 82, 224, 1), //ボタンの背景色
+                            ),
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) => PostsPage(title: '',)));
+                            },
+                            child: Text(
+                              "もっと見る",
+                            ),
+                          ),
                         ),
                       ),
                       SizedBox(height: 85,),
