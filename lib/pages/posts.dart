@@ -1317,7 +1317,25 @@ class _PostsPageState extends State<PostsPage> {
                         }
                     ),
                   ),
-                  SizedBox(height: 85,),
+                  Container(
+                    width: 390,height: 91.09,color: Colors.white,
+                    child: Center(
+                      child: Container(
+                        width: 350,
+                        height: 51.09,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color.fromRGBO(0, 82, 224, 1), //ボタンの背景色
+                          ),
+                          onPressed: () {},
+                          child: Text(
+                            "次へ",
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 50,),
                   Center(
                     child: Container(
                       width: 400,

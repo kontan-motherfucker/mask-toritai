@@ -1538,26 +1538,28 @@ class _TimeLinePageState extends State<TimeLinePage> {
                             }
                         ),
                       ),
-                      SizedBox(height: 20,),
-                      Center(
-                        child: Container(
-                          width: 360,
-                          height: 51.09,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Color.fromRGBO(0, 82, 224, 1), //ボタンの背景色
-                            ),
-                            onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) => PostsPage(title: '',)));
-                            },
-                            child: Text(
-                              "もっと見る",
+                      Container(
+                        width: 390,height: 91.09,color: Colors.white,
+                        child: Center(
+                          child: Container(
+                            width: 350,
+                            height: 51.09,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Color.fromRGBO(0, 82, 224, 1), //ボタンの背景色
+                              ),
+                              onPressed: () {
+                                Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) => PostsPage(title: '',)));
+                              },
+                              child: Text(
+                                "もっと見る",
+                              ),
                             ),
                           ),
                         ),
                       ),
-                      SizedBox(height: 85,),
+                      SizedBox(height: 50,),
                       Center(
                         child: Container(
                           width: 400,
